@@ -26,7 +26,9 @@ public enum Name
 
     Tricon,
     Rhombus,
-    Pentagonic
+    Pentagonic,
+
+    Bomb
 }
 
 [Serializable]

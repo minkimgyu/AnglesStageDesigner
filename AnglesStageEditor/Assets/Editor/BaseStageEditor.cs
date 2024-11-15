@@ -33,6 +33,8 @@ public class BaseStageEditor : Editor
             { Name.RedRectangle, Resources.Load<Sprite>("Images/Enemy/Red/AnglesEnemyRectRed") },
             { Name.RedPentagon, Resources.Load<Sprite>("Images/Enemy/Red/AnglesEnemyPentaRed") },
             { Name.RedHexagon, Resources.Load<Sprite>("Images/Enemy/Red/AgnlesEnemyHectaRed") },
+
+            { Name.Bomb, Resources.Load<Sprite>("Images/AnglesBomb") },
         };
 
         Dictionary<Name, float> enemyScaleDictionary = new Dictionary<Name, float>()
@@ -50,6 +52,8 @@ public class BaseStageEditor : Editor
             { Name.Tricon, 0.6f },
             { Name.Rhombus, 0.6f },
             { Name.Pentagonic, 0.75f },
+
+            { Name.Bomb, 1f },
 
         };
 
