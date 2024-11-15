@@ -53,7 +53,7 @@ public class BaseStageEditor : Editor
             { Name.Rhombus, 0.6f },
             { Name.Pentagonic, 0.75f },
 
-            { Name.Bomb, 1f },
+            { Name.Bomb, 0.7f },
 
         };
 

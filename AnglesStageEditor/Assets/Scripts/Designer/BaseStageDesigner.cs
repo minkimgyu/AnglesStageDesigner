@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
+using System.Threading.Tasks;
 
 abstract public class BaseStageDesigner : MonoBehaviour
 {
@@ -38,12 +38,36 @@ abstract public class BaseStageDesigner : MonoBehaviour
         CreatePreviewSpawner(previewerPrefab);
     }
 
-    void OnValidate() { EditorApplication.delayCall += _OnValidate; }
+    async void OnChanged()
+    {
+        await Task.Delay(100);
+        _OnValidate();
+    }
+
+    void OnValidate() 
+    { 
+        OnChanged(); 
+    }
 
     protected abstract void _OnValidate();
 
     void CreatePreviewSpawner(Previewer previewerPrefab)
     {
+
+        ///
+        ///
+        //
+        //
+        //
+        //
+
+        //
+        //
+        //
+
+        //
+        //
+
         GameObject activatedPreviewerParent = new GameObject("activatedPreviewerParent");
         GameObject deactivatedPreviewerParent = new GameObject("deactivatedPreviewerParent");
 
