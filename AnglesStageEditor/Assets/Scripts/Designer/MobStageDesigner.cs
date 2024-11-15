@@ -3,52 +3,72 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using System;
 
 public class MobStageDesigner : BaseStageDesigner
 {
-    [SerializeField] MobStageData stageData; // 따로 필드 만들어주기
-    public MobStageData StageData { get { return stageData; } }
+    //public MobStageData stageData; // 따로 필드 만들어주기
+    public SpawnData[] easySpawnDatas;
+    public SpawnData[] normalSpawnDatas;
+    public SpawnData[] hardSpawnDatas;
 
-    [HideInInspector] public Transform easySpawnPointParent;
-    [HideInInspector] public Transform normalSpawnPointParent;
-    [HideInInspector] public Transform hardSpawnPointParent;
+    public Transform easySpawnPointParent;
+    public Transform normalSpawnPointParent;
+    public Transform hardSpawnPointParent;
 
-    Difficulty difficulty;
-    public Difficulty Difficulty
-    { get { return difficulty; } set { difficulty = value; } }
+    public Difficulty difficulty;
 
-    public override void Initialize(
-        Dictionary<Name, Sprite> enemyImageDictionary,
-        Dictionary<Name, float> enemyScaleDictionary,
-        Previewer previewerPrefab)
+    protected override void _OnValidate()
     {
-        base.Initialize(enemyImageDictionary, enemyScaleDictionary, previewerPrefab);
-        stageData = new MobStageData();
+        CreatePreview();
     }
 
-    public void CreatePreview()
+    public SpawnData[] GetSpawnData()
     {
-        if (stageData == null) return;
-
         SpawnData[] spawnDatas;
 
         switch (difficulty)
         {
             case Difficulty.Easy:
-                spawnDatas = stageData.easySpawnDatas;
+                spawnDatas = easySpawnDatas;
                 break;
             case Difficulty.Nomal:
-                spawnDatas = stageData.normalSpawnDatas;
+                spawnDatas = normalSpawnDatas;
                 break;
             case Difficulty.Hard:
-                spawnDatas = stageData.hardSpawnDatas;
+                spawnDatas = hardSpawnDatas;
                 break;
             default:
-                spawnDatas = stageData.easySpawnDatas;
+                spawnDatas = easySpawnDatas;
                 break;
         }
 
+        return spawnDatas;
+    }
+
+    public void SetSpawnData(SpawnData[] spawnDatas)
+    {
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                easySpawnDatas = spawnDatas;
+                break;
+            case Difficulty.Nomal:
+                normalSpawnDatas = spawnDatas;
+                break;
+            case Difficulty.Hard:
+                hardSpawnDatas = spawnDatas;
+                break;
+            default:
+                easySpawnDatas = spawnDatas;
+                break;
+        }
+    }
+
+    public void CreatePreview()
+    {
+        SpawnData[] spawnDatas = GetSpawnData();
         if (spawnDatas == null) return;
 
         RemovePreviewer();
@@ -70,7 +90,7 @@ public class MobStageDesigner : BaseStageDesigner
             spawnDatas[j] = new SpawnData(point.position, (Name)0);
         }
 
-        stageData.AddSpawnDatas(difficulty, spawnDatas);
+        SetSpawnData(spawnDatas);
     }
 
     public void FillSpawnPoint()
@@ -78,21 +98,28 @@ public class MobStageDesigner : BaseStageDesigner
         FillPoint(easySpawnPointParent, Difficulty.Easy);
         FillPoint(normalSpawnPointParent, Difficulty.Nomal);
         FillPoint(hardSpawnPointParent, Difficulty.Hard);
-    }
-
-    public void RemoveSpawnPoint()
-    {
-        stageData.RemoveSpawnDatas(difficulty);
-        RemovePreviewer();
+        CreatePreview();
     }
 
     public override void SaveData()
     {
-        fileIO.SaveData(stageData, fileLocation, fileName);
+        fileIO.SaveData(
+            new MobStageData(
+            easySpawnDatas,
+            normalSpawnDatas,
+            hardSpawnDatas),
+
+            fileLocation, 
+            fileName
+        );
     }
 
     public override void LoadData()
     {
-        stageData = fileIO.LoadData<MobStageData>(fileLocation, fileName);
+        MobStageData mobStageData = fileIO.LoadData<MobStageData>(fileToLoad.text);
+        easySpawnDatas = mobStageData.easySpawnDatas;
+        normalSpawnDatas = mobStageData.normalSpawnDatas;
+        hardSpawnDatas = mobStageData.hardSpawnDatas;
+        CreatePreview();
     }
 }

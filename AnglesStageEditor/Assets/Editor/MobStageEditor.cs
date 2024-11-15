@@ -12,9 +12,17 @@ public class MobStageEditor : BaseStageEditor
     SerializedProperty normalSpawnPointParent;
     SerializedProperty hardSpawnPointParent;
 
+    SerializedProperty easySpawnDatas;
+    SerializedProperty normalSpawnDatas;
+    SerializedProperty hardSpawnDatas;
+
     protected override void OnEnable()
     {
         base.OnEnable();
+
+        easySpawnDatas = serializedObject.FindProperty("easySpawnDatas");
+        normalSpawnDatas = serializedObject.FindProperty("normalSpawnDatas");
+        hardSpawnDatas = serializedObject.FindProperty("hardSpawnDatas");
 
         easySpawnPointParent = serializedObject.FindProperty("easySpawnPointParent");
         normalSpawnPointParent = serializedObject.FindProperty("normalSpawnPointParent");
@@ -24,24 +32,7 @@ public class MobStageEditor : BaseStageEditor
 
     private void OnSceneGUI()
     {
-        SpawnData[] spawnDatas;
-
-        switch (stageDesigner.Difficulty)
-        {
-            case Difficulty.Easy:
-                spawnDatas = stageDesigner.StageData.easySpawnDatas;
-                break;
-            case Difficulty.Nomal:
-                spawnDatas = stageDesigner.StageData.normalSpawnDatas;
-                break;
-            case Difficulty.Hard:
-                spawnDatas = stageDesigner.StageData.hardSpawnDatas;
-                break;
-            default:
-                spawnDatas = stageDesigner.StageData.easySpawnDatas;
-                break;
-        }
-
+        SpawnData[] spawnDatas = stageDesigner.GetSpawnData();
         if (spawnDatas == null) return;
 
         for (int i = 0; i < spawnDatas.Length; i++)
@@ -50,8 +41,49 @@ public class MobStageEditor : BaseStageEditor
         }
     }
 
+    int tabIndex = 0;
+    string[] tabTexts = { Difficulty.Easy.ToString(), Difficulty.Nomal.ToString(), Difficulty.Hard.ToString() };
+
+    void DrawDataField(SerializedProperty property)
+    {
+        // Ofcourse you also want to change the list size here
+        property.arraySize = EditorGUILayout.IntField("Size", property.arraySize);
+
+        for (int i = 0; i < property.arraySize; i++)
+        {
+            var dialogue = property.GetArrayElementAtIndex(i);
+            EditorGUILayout.PropertyField(dialogue, new GUIContent("Dialogue " + i), true);
+        }
+
+        // Note: You also forgot to add this
+        serializedObject.ApplyModifiedProperties();
+    }
+
+    void DrawSpawnDatas()
+    {
+        switch (stageDesigner.difficulty)
+        {
+            case Difficulty.Easy:
+                DrawDataField(easySpawnDatas);
+                break;
+            case Difficulty.Nomal:
+                DrawDataField(normalSpawnDatas);
+                break;
+            case Difficulty.Hard:
+                DrawDataField(hardSpawnDatas);
+                break;
+        }
+    }
+
+    bool nowSelected = false;
+    Difficulty oldDifficulty = Difficulty.Easy;
+
     public override void OnInspectorGUI()
     {
+        if (nowSelected == false) nowSelected = true;
+
+        serializedObject.Update();
+
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("설정", labelStyle, GUILayout.ExpandWidth(true));
         EditorGUILayout.Space();
@@ -60,6 +92,7 @@ public class MobStageEditor : BaseStageEditor
 
         if (GUILayout.Button("저장")) stageDesigner.SaveData();
         EditorGUILayout.Space();
+
 
         EditorGUILayout.PropertyField(fileToLoad, new GUIContent("FileToLoad"));
         serializedObject.ApplyModifiedProperties();
@@ -70,29 +103,39 @@ public class MobStageEditor : BaseStageEditor
         EditorGUILayout.LabelField("스테이지", labelStyle, GUILayout.ExpandWidth(true));
         EditorGUILayout.Space();
 
-        EditorGUILayout.PropertyField(easySpawnPointParent, new GUIContent("EasySpawnPointParent"));
-        serializedObject.ApplyModifiedProperties();
+        tabIndex = GUILayout.Toolbar(tabIndex, tabTexts);
+        stageDesigner.difficulty = (Difficulty)tabIndex;
+        if(oldDifficulty != stageDesigner.difficulty)
+        {
+            oldDifficulty = stageDesigner.difficulty;
+            stageDesigner.CreatePreview();
+        }
 
-        EditorGUILayout.PropertyField(normalSpawnPointParent, new GUIContent("NormalSpawnPointParent"));
-        serializedObject.ApplyModifiedProperties();
+        switch (stageDesigner.difficulty)
+        {
+            case Difficulty.Easy:
+                EditorGUILayout.PropertyField(easySpawnPointParent, new GUIContent("EasySpawnPointParent"));
+                serializedObject.ApplyModifiedProperties();
 
-        EditorGUILayout.PropertyField(hardSpawnPointParent, new GUIContent("HardSpawnPointParent"));
-        serializedObject.ApplyModifiedProperties();
+                if (GUILayout.Button("스폰 위치 채우기")) stageDesigner.FillSpawnPoint();
+                DrawSpawnDatas();
+                break;
+            case Difficulty.Nomal:
+                EditorGUILayout.PropertyField(normalSpawnPointParent, new GUIContent("NormalSpawnPointParent"));
+                serializedObject.ApplyModifiedProperties();
 
-        if (GUILayout.Button("스폰 위치 채우기")) stageDesigner.FillSpawnPoint();
+                if (GUILayout.Button("스폰 위치 채우기")) stageDesigner.FillSpawnPoint();
+                DrawSpawnDatas();
+                break;
+            case Difficulty.Hard:
+                EditorGUILayout.PropertyField(hardSpawnPointParent, new GUIContent("HardSpawnPointParent"));
+                serializedObject.ApplyModifiedProperties();
 
-        EditorGUILayout.Space();
-        EditorGUILayout.LabelField("미리보기", labelStyle, GUILayout.ExpandWidth(true));
-        EditorGUILayout.Space();
+                if (GUILayout.Button("스폰 위치 채우기")) stageDesigner.FillSpawnPoint();
+                DrawSpawnDatas();
+                break;
+        }
 
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PrefixLabel("난이도");
-        stageDesigner.Difficulty = (Difficulty)EditorGUILayout.EnumPopup(stageDesigner.Difficulty);
-        EditorGUILayout.EndHorizontal();
-
-        if (GUILayout.Button("생성")) stageDesigner.CreatePreview();
-        if (GUILayout.Button("초기화")) stageDesigner.RemovePreviewer();
-
-        base.OnInspectorGUI();
+        if (nowSelected == false) stageDesigner.CreatePreview();
     }
 }

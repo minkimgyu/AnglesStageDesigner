@@ -5,34 +5,28 @@ using UnityEngine;
 
 public class BossStageDesigner : BaseStageDesigner
 {
-    [SerializeField] BossStageData stageData; // 따로 필드 만들어주기
-    public BossStageData StageData { get { return stageData; } }
+    public SpawnData bossSpawnData;
+    public SpawnData[] mobSpawnDatas;
 
-    [HideInInspector] public Transform bossSpawnPoint;
-    [HideInInspector] public Transform mobSpawnPointParent;
-
-    public override void Initialize(Dictionary<Name, Sprite> enemyImageDictionary, Dictionary<Name, float> enemyScaleDictionary, Previewer previewerPrefab)
-    {
-        base.Initialize(enemyImageDictionary, enemyScaleDictionary, previewerPrefab);
-        stageData = new BossStageData();
-    }
+    public Transform bossSpawnPoint;
+    public Transform mobSpawnPointParent;
 
     public void CreatePreview()
     {
-        if (stageData == null) return;
+        if (bossSpawnData == null || mobSpawnDatas == null) return;
 
         RemovePreviewer();
 
-        CreatePreviewer(stageData.bosssSpawnData);
-        for (int i = 0; i < stageData.mobSpawnDatas.Length; i++)
+        CreatePreviewer(bossSpawnData);
+        for (int i = 0; i < mobSpawnDatas.Length; i++)
         {
-            CreatePreviewer(stageData.mobSpawnDatas[i]);
+            CreatePreviewer(mobSpawnDatas[i]);
         }
     }
 
     void FillPoint(Transform bossPoint, Transform mobPointParent)
     {
-        SpawnData mobSpawnData = new SpawnData(bossPoint.position, (Name)0);
+        SpawnData bossSpawnData = new SpawnData(bossPoint.position, (Name)0);
 
         int childCount = mobPointParent.childCount;
         SpawnData[] mobSpawnDatas = new SpawnData[childCount];
@@ -43,27 +37,31 @@ public class BossStageDesigner : BaseStageDesigner
             mobSpawnDatas[j] = new SpawnData(point.position, (Name)0);
         }
 
-        stageData.AddSpawnDatas(mobSpawnData, mobSpawnDatas);
+        this.bossSpawnData = bossSpawnData;
+        this.mobSpawnDatas = mobSpawnDatas;
     }
 
     public void FillSpawnPoint()
     {
         FillPoint(bossSpawnPoint, mobSpawnPointParent);
-    }
-
-    public void RemoveSpawnPoint()
-    {
-        stageData.RemoveSpawnDatas();
-        RemovePreviewer();
+        CreatePreview();
     }
 
     public override void SaveData()
     {
-        fileIO.SaveData(stageData, fileLocation, fileName);
+        fileIO.SaveData(new BossStageData(bossSpawnData, mobSpawnDatas), fileLocation, fileName);
     }
 
     public override void LoadData()
     {
-        stageData = fileIO.LoadData<BossStageData>(fileLocation, fileName);
+        BossStageData bossStageData = fileIO.LoadData<BossStageData>(fileToLoad.text);
+        bossSpawnData = bossStageData.bossSpawnData;
+        mobSpawnDatas = bossStageData.mobSpawnDatas;
+        CreatePreview();
+    }
+
+    protected override void _OnValidate()
+    {
+        CreatePreview();
     }
 }

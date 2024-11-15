@@ -29,6 +29,11 @@ public class FileIO
 
     string ReturnPath(string filePath, string fileName) { return Application.dataPath + filePath + fileName + _extension; }
 
+    public T LoadData<T>(string jData)
+    {
+        return _parser.JsonToObject<T>(jData);
+    }
+
     public T LoadData<T>(string filePath, string fileName)
     {
         string path = ReturnPath(filePath, fileName);

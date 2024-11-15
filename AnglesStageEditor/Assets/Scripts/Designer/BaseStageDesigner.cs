@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
 abstract public class BaseStageDesigner : MonoBehaviour
 {
+    protected PreviewSpawner previewSpawner;
     protected Dictionary<Name, Sprite> enemyImageDictionary;
     protected Dictionary<Name, float> enemyScaleDictionary;
-    protected Previewer previewerPrefab;
 
     [HideInInspector] public TextAsset fileToLoad;
 
@@ -19,14 +20,43 @@ abstract public class BaseStageDesigner : MonoBehaviour
     protected string fileLocation = "/Editor/Save/";
     public string FileLocation { get { return fileLocation; } set { fileLocation = value; } }
 
-    public virtual void Initialize(
+    public void Initialize(
         Dictionary<Name, Sprite> enemyImageDictionary,
         Dictionary<Name, float> enemyScaleDictionary,
         Previewer previewerPrefab)
     {
         this.enemyImageDictionary = enemyImageDictionary;
         this.enemyScaleDictionary = enemyScaleDictionary;
-        this.previewerPrefab = previewerPrefab;
+
+        Transform childTransform = transform.Find("PreviewerSpawner");
+        if (childTransform != null)// 존재한다면 아래 진행하지 않음
+        {
+            previewSpawner = childTransform.GetComponent<PreviewSpawner>();
+            return;
+        }
+
+        CreatePreviewSpawner(previewerPrefab);
+    }
+
+    void OnValidate() { EditorApplication.delayCall += _OnValidate; }
+
+    protected abstract void _OnValidate();
+
+    void CreatePreviewSpawner(Previewer previewerPrefab)
+    {
+        GameObject activatedPreviewerParent = new GameObject("activatedPreviewerParent");
+        GameObject deactivatedPreviewerParent = new GameObject("deactivatedPreviewerParent");
+
+        GameObject previewerSpawner = new GameObject("PreviewerSpawner");
+        previewerSpawner.transform.SetParent(transform);
+
+        /////
+        // 부모 변경
+        activatedPreviewerParent.transform.SetParent(previewerSpawner.transform);
+        deactivatedPreviewerParent.transform.SetParent(previewerSpawner.transform);
+
+        previewSpawner = previewerSpawner.AddComponent<PreviewSpawner>();
+        previewSpawner.Initialize(previewerPrefab, 10, activatedPreviewerParent.transform, deactivatedPreviewerParent.transform);
     }
 
     public abstract void SaveData();
@@ -34,17 +64,12 @@ abstract public class BaseStageDesigner : MonoBehaviour
 
     protected void CreatePreviewer(SpawnData spawnData)
     {
-        Previewer previewer = Instantiate(previewerPrefab, new Vector2(spawnData.spawnPosition.x, spawnData.spawnPosition.y), Quaternion.identity);
-        previewer.ResetSprite(enemyImageDictionary[spawnData.name]);
-        previewer.ResetScale(enemyScaleDictionary[spawnData.name]);
+        Previewer previewer = previewSpawner.Create(enemyImageDictionary[spawnData.name], enemyScaleDictionary[spawnData.name]);
+        previewer.transform.position = new Vector2(spawnData.spawnPosition.x, spawnData.spawnPosition.y);
     }
 
     public void RemovePreviewer()
     {
-        Previewer[] previewers = FindObjectsByType<Previewer>(FindObjectsSortMode.None);
-        for (int i = 0; i < previewers.Length; i++)
-        {
-            DestroyImmediate(previewers[i].gameObject);
-        }
+        previewSpawner.Clear();
     }
 }

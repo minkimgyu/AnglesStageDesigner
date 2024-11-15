@@ -11,16 +11,40 @@ public class BossStageEditor : BaseStageEditor
     SerializedProperty bossSpawnPointParent;
     SerializedProperty mobSpawnPointParent;
 
+    SerializedProperty bossSpawnData;
+    SerializedProperty mobSpawnDatas;
+
     protected override void OnEnable()
     {
         base.OnEnable();
+
+        bossSpawnData = serializedObject.FindProperty("bossSpawnData");
+        mobSpawnDatas = serializedObject.FindProperty("mobSpawnDatas");
+
         bossSpawnPointParent = serializedObject.FindProperty("bossSpawnPoint");
         mobSpawnPointParent = serializedObject.FindProperty("mobSpawnPointParent");
         stageDesigner = (BossStageDesigner)target;
     }
 
+    void DrawDataField(SerializedProperty property)
+    {
+        // Ofcourse you also want to change the list size here
+        property.arraySize = EditorGUILayout.IntField("Size", property.arraySize);
+
+        for (int i = 0; i < property.arraySize; i++)
+        {
+            var dialogue = property.GetArrayElementAtIndex(i);
+            EditorGUILayout.PropertyField(dialogue, new GUIContent("Dialogue " + i), true);
+        }
+
+        // Note: You also forgot to add this
+        serializedObject.ApplyModifiedProperties();
+    }
+
     public override void OnInspectorGUI()
     {
+        serializedObject.Update();
+
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("설정", labelStyle, GUILayout.ExpandWidth(true));
         EditorGUILayout.Space();
@@ -45,15 +69,11 @@ public class BossStageEditor : BaseStageEditor
         EditorGUILayout.PropertyField(mobSpawnPointParent, new GUIContent("MobSpawnPointParent"));
         serializedObject.ApplyModifiedProperties();
 
-        if (GUILayout.Button("스폰 위치 채우기")) stageDesigner.FillSpawnPoint();
+        if (GUILayout.Button("스폰 위치 채우기")) 
+            stageDesigner.FillSpawnPoint();
 
-        EditorGUILayout.Space();
-        EditorGUILayout.LabelField("미리보기", labelStyle, GUILayout.ExpandWidth(true));
-        EditorGUILayout.Space();
-
-        if (GUILayout.Button("생성")) stageDesigner.CreatePreview();
-        if (GUILayout.Button("초기화")) stageDesigner.RemovePreviewer();
-
-        base.OnInspectorGUI();
+        EditorGUILayout.PropertyField(bossSpawnData, new GUIContent("BossSpawnData"));
+        serializedObject.ApplyModifiedProperties();
+        DrawDataField(mobSpawnDatas);
     }
 }
