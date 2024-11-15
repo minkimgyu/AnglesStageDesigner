@@ -55,7 +55,7 @@ public class VectorPropertyDrawer : PropertyDrawer
     /// </summary>
     /// <param name="property">The property for which to get the field count.</param>
     /// <returns>The field count of the property.</returns>
-    private static int GetFieldCount(SerializedProperty property)
+    private int GetFieldCount(SerializedProperty property)
     {
         int count;
         if (!_fieldCounts.TryGetValue(property.type, out count))

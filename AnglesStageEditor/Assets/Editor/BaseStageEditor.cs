@@ -58,4 +58,28 @@ public class BaseStageEditor : Editor
         BaseStageDesigner stageDesigner = (BaseStageDesigner)target;
         stageDesigner.Initialize(enemyImageDictionary, enemyScaleDictionary, previewerPrefab);
     }
+
+    protected void DrawBasicInspector(BaseStageDesigner baseDesigner)
+    {
+        serializedObject.Update();
+
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("설정", labelStyle, GUILayout.ExpandWidth(true));
+        EditorGUILayout.Space();
+        baseDesigner.FileName = EditorGUILayout.TextField("파일 이름", baseDesigner.FileName);
+        baseDesigner.FileLocation = EditorGUILayout.TextField("위치", baseDesigner.FileLocation);
+
+        if (GUILayout.Button("저장")) baseDesigner.SaveData();
+        EditorGUILayout.Space();
+
+
+        EditorGUILayout.PropertyField(fileToLoad, new GUIContent("FileToLoad"));
+        serializedObject.ApplyModifiedProperties();
+
+        if (GUILayout.Button("불러오기")) baseDesigner.LoadData();
+
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("스테이지", labelStyle, GUILayout.ExpandWidth(true));
+        EditorGUILayout.Space();
+    }
 }

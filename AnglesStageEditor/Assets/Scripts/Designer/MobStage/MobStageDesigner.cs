@@ -95,9 +95,7 @@ public class MobStageDesigner : BaseStageDesigner
 
     public void FillSpawnPoint()
     {
-        FillPoint(easySpawnPointParent, Difficulty.Easy);
-        FillPoint(normalSpawnPointParent, Difficulty.Nomal);
-        FillPoint(hardSpawnPointParent, Difficulty.Hard);
+        FillPoint(easySpawnPointParent, difficulty);
         CreatePreview();
     }
 

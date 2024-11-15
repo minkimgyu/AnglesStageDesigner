@@ -64,12 +64,16 @@ abstract public class BaseStageDesigner : MonoBehaviour
 
     protected void CreatePreviewer(SpawnData spawnData)
     {
+        if (previewSpawner == null) return;
+
         Previewer previewer = previewSpawner.Create(enemyImageDictionary[spawnData.name], enemyScaleDictionary[spawnData.name]);
         previewer.transform.position = new Vector2(spawnData.spawnPosition.x, spawnData.spawnPosition.y);
     }
 
     public void RemovePreviewer()
     {
+        if (previewSpawner == null) return;
+
         previewSpawner.Clear();
     }
 }
