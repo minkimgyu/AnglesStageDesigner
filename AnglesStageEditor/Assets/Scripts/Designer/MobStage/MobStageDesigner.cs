@@ -8,7 +8,6 @@ using System;
 
 public class MobStageDesigner : BaseStageDesigner
 {
-    //public MobStageData stageData; // 따로 필드 만들어주기
     public SpawnData[] easySpawnDatas;
     public SpawnData[] normalSpawnDatas;
     public SpawnData[] hardSpawnDatas;
@@ -117,16 +116,6 @@ public class MobStageDesigner : BaseStageDesigner
         normalSpawnDatas = mobStageData.normalSpawnDatas;
         hardSpawnDatas = mobStageData.hardSpawnDatas;
 
-
-        GameObject spawnPointParent = new GameObject("SpawnPointParent");
-        for (int i = 0; i < easySpawnDatas.Length; i++)
-        {
-            GameObject point = new GameObject($"Point {i}");
-            point.transform.position = new Vector3(easySpawnDatas[i].spawnPosition.x, easySpawnDatas[i].spawnPosition.y, 0);
-            point.transform.SetParent(spawnPointParent.transform);
-        }
-
-        this.spawnPointParent = spawnPointParent.transform;
         CreatePreview();
     }
 }
