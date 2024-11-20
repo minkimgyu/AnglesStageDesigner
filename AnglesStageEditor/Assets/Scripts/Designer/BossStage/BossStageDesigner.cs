@@ -13,8 +13,9 @@ public class BossStageDesigner : BaseStageDesigner
 
     public void CreatePreview()
     {
-        RemovePreviewer();
+        if (mobSpawnDatas == null) return;
 
+        RemovePreviewer();
         CreatePreviewer(bossSpawnData);
         for (int i = 0; i < mobSpawnDatas.Length; i++)
         {
@@ -24,7 +25,7 @@ public class BossStageDesigner : BaseStageDesigner
 
     void FillPoint(Transform bossPoint, Transform mobPointParent)
     {
-        SpawnData bossSpawnData = new SpawnData(bossPoint.position, (Name)0);
+        SpawnData bossSpawnData = new SpawnData(bossPoint.position, (Name)1);
 
         int childCount = mobPointParent.childCount;
         SpawnData[] mobSpawnDatas = new SpawnData[childCount];
@@ -32,7 +33,7 @@ public class BossStageDesigner : BaseStageDesigner
         for (int j = 0; j < childCount; j++)
         {
             Transform point = mobPointParent.GetChild(j);
-            mobSpawnDatas[j] = new SpawnData(point.position, (Name)0);
+            mobSpawnDatas[j] = new SpawnData(point.position, (Name)1);
         }
 
         this.bossSpawnData = bossSpawnData;

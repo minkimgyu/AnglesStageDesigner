@@ -20,6 +20,8 @@ public class BaseStageEditor : Editor
 
         Dictionary<Name, Sprite> enemyImageDictionary = new Dictionary<Name, Sprite>()
         {
+            { Name.Player_Not_Used, Resources.Load<Sprite>("Images/Player_Not_Used") },
+
             { Name.Tricon, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Boss_Tricorn") },
             { Name.Rhombus, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Boss_Rhombus") },
             { Name.Pentagonic, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Boss_Pentagonic") },
@@ -39,6 +41,8 @@ public class BaseStageEditor : Editor
 
         Dictionary<Name, float> enemyScaleDictionary = new Dictionary<Name, float>()
         {
+            { Name.Player_Not_Used, 1f },
+
             { Name.YellowTriangle, 0.4f },
             { Name.YellowRectangle, 0.4f },
             { Name.YellowPentagon, 0.5f },
@@ -60,6 +64,7 @@ public class BaseStageEditor : Editor
         Previewer previewerPrefab = Resources.Load<Previewer>("Prefabs/Previewer");
 
         BaseStageDesigner stageDesigner = (BaseStageDesigner)target;
+        stageDesigner.transform.position = Vector3.zero;
         stageDesigner.Initialize(enemyImageDictionary, enemyScaleDictionary, previewerPrefab);
     }
 

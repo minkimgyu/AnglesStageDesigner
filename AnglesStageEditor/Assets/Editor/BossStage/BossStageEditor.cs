@@ -26,6 +26,17 @@ public class BossStageEditor : BaseStageEditor
         stageDesigner = (BossStageDesigner)target;
     }
 
+    private void OnSceneGUI()
+    {
+        SpawnData[] spawnDatas = stageDesigner.mobSpawnDatas;
+        if (spawnDatas == null) return;
+
+        for (int i = 0; i < spawnDatas.Length; i++)
+        {
+            Handles.Label(new Vector3(spawnDatas[i].spawnPosition.x, spawnDatas[i].spawnPosition.y, 0), i.ToString(), labelStyle);
+        }
+    }
+
     public override void OnInspectorGUI()
     {
         DrawBasicInspector(stageDesigner);

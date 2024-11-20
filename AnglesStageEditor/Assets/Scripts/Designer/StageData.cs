@@ -14,6 +14,8 @@ public enum Difficulty
 [Serializable]
 public enum Name
 {
+    Player_Not_Used,
+
     YellowTriangle,
     YellowRectangle,
     YellowPentagon,

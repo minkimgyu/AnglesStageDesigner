@@ -37,7 +37,7 @@ public class SurvivalStageDesigner : BaseStageDesigner
         for (int j = 0; j < childCount; j++)
         {
             Transform point = spawnPointParent.GetChild(j);
-            spawnDatas[j] = new SpawnData(point.position, (Name)0);
+            spawnDatas[j] = new SpawnData(point.position, (Name)1);
         }
 
         phaseDatas[index] = new PhaseData(0, spawnDatas);
