@@ -36,7 +36,7 @@ public class BossStageEditor : BaseStageEditor
         EditorGUILayout.PropertyField(mobSpawnPointParent, new GUIContent("MobSpawnPointParent"));
         serializedObject.ApplyModifiedProperties();
 
-        if (GUILayout.Button("스폰 위치 채우기")) 
+        if (GUILayout.Button("Fill Spawn Point")) 
             stageDesigner.FillSpawnPoint();
 
         EditorGUILayout.PropertyField(bossSpawnData, new GUIContent("BossSpawnData"));

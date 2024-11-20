@@ -13,8 +13,6 @@ public class BossStageDesigner : BaseStageDesigner
 
     public void CreatePreview()
     {
-        if (bossSpawnData == null || mobSpawnDatas == null) return;
-
         RemovePreviewer();
 
         CreatePreviewer(bossSpawnData);

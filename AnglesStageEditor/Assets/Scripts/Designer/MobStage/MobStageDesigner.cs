@@ -13,9 +13,7 @@ public class MobStageDesigner : BaseStageDesigner
     public SpawnData[] normalSpawnDatas;
     public SpawnData[] hardSpawnDatas;
 
-    public Transform easySpawnPointParent;
-    public Transform normalSpawnPointParent;
-    public Transform hardSpawnPointParent;
+    public Transform spawnPointParent;
 
     public Difficulty difficulty;
 
@@ -52,16 +50,16 @@ public class MobStageDesigner : BaseStageDesigner
         switch (difficulty)
         {
             case Difficulty.Easy:
-                easySpawnDatas = spawnDatas;
+                easySpawnDatas = (SpawnData[])spawnDatas.Clone();
                 break;
             case Difficulty.Nomal:
-                normalSpawnDatas = spawnDatas;
+                normalSpawnDatas = (SpawnData[])spawnDatas.Clone();
                 break;
             case Difficulty.Hard:
-                hardSpawnDatas = spawnDatas;
+                hardSpawnDatas = (SpawnData[])spawnDatas.Clone();
                 break;
             default:
-                easySpawnDatas = spawnDatas;
+                easySpawnDatas = (SpawnData[])spawnDatas.Clone();
                 break;
         }
     }
@@ -95,7 +93,7 @@ public class MobStageDesigner : BaseStageDesigner
 
     public void FillSpawnPoint()
     {
-        FillPoint(easySpawnPointParent, difficulty);
+        FillPoint(spawnPointParent, difficulty);
         CreatePreview();
     }
 
@@ -118,6 +116,17 @@ public class MobStageDesigner : BaseStageDesigner
         easySpawnDatas = mobStageData.easySpawnDatas;
         normalSpawnDatas = mobStageData.normalSpawnDatas;
         hardSpawnDatas = mobStageData.hardSpawnDatas;
+
+
+        GameObject spawnPointParent = new GameObject("SpawnPointParent");
+        for (int i = 0; i < easySpawnDatas.Length; i++)
+        {
+            GameObject point = new GameObject($"Point {i}");
+            point.transform.position = new Vector3(easySpawnDatas[i].spawnPosition.x, easySpawnDatas[i].spawnPosition.y, 0);
+            point.transform.SetParent(spawnPointParent.transform);
+        }
+
+        this.spawnPointParent = spawnPointParent.transform;
         CreatePreview();
     }
 }

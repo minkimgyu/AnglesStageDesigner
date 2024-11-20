@@ -68,22 +68,22 @@ public class BaseStageEditor : Editor
         serializedObject.Update();
 
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("설정", labelStyle, GUILayout.ExpandWidth(true));
+        EditorGUILayout.LabelField("Setting", labelStyle, GUILayout.ExpandWidth(true));
         EditorGUILayout.Space();
-        baseDesigner.FileName = EditorGUILayout.TextField("파일 이름", baseDesigner.FileName);
-        baseDesigner.FileLocation = EditorGUILayout.TextField("위치", baseDesigner.FileLocation);
+        baseDesigner.FileName = EditorGUILayout.TextField("File Name", baseDesigner.FileName);
+        baseDesigner.FileLocation = EditorGUILayout.TextField("Location", baseDesigner.FileLocation);
 
-        if (GUILayout.Button("저장")) baseDesigner.SaveData();
+        if (GUILayout.Button("Save")) baseDesigner.SaveData();
         EditorGUILayout.Space();
 
 
-        EditorGUILayout.PropertyField(fileToLoad, new GUIContent("FileToLoad"));
+        EditorGUILayout.PropertyField(fileToLoad, new GUIContent("File To Load"));
         serializedObject.ApplyModifiedProperties();
 
-        if (GUILayout.Button("불러오기")) baseDesigner.LoadData();
+        if (GUILayout.Button("Load")) baseDesigner.LoadData();
 
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("스테이지", labelStyle, GUILayout.ExpandWidth(true));
+        EditorGUILayout.LabelField("Stage", labelStyle, GUILayout.ExpandWidth(true));
         EditorGUILayout.Space();
     }
 }

@@ -9,7 +9,7 @@ public class MobStageEditor : BaseStageEditor
     MobStageDesigner stageDesigner;
 
     Dictionary<Difficulty, SerializedProperty> spawnDatas = new Dictionary<Difficulty, SerializedProperty>();
-    Dictionary<Difficulty, SerializedProperty> spawnPointParent = new Dictionary<Difficulty, SerializedProperty>();
+    SerializedProperty spawnPointParent;
 
     protected override void OnEnable()
     {
@@ -24,14 +24,7 @@ public class MobStageEditor : BaseStageEditor
         SerializedProperty hardSpawnDatas = serializedObject.FindProperty("hardSpawnDatas");
         spawnDatas.Add(Difficulty.Hard, hardSpawnDatas);
 
-        SerializedProperty easySpawnPointParent = serializedObject.FindProperty("easySpawnPointParent");
-        spawnPointParent.Add(Difficulty.Easy, easySpawnPointParent);
-
-        SerializedProperty normalSpawnPointParent = serializedObject.FindProperty("normalSpawnPointParent");
-        spawnPointParent.Add(Difficulty.Nomal, normalSpawnPointParent);
-
-        SerializedProperty hardSpawnPointParent = serializedObject.FindProperty("hardSpawnPointParent");
-        spawnPointParent.Add(Difficulty.Hard, hardSpawnPointParent);
+        spawnPointParent = serializedObject.FindProperty("spawnPointParent");
 
         stageDesigner = (MobStageDesigner)target;
     }
@@ -67,9 +60,9 @@ public class MobStageEditor : BaseStageEditor
             stageDesigner.CreatePreview();
         }
 
-        EditorGUILayout.PropertyField(spawnPointParent[stageDesigner.difficulty], new GUIContent("SpawnPointParent"));
+        EditorGUILayout.PropertyField(spawnPointParent, new GUIContent("SpawnPointParent"));
 
-        if (GUILayout.Button("스폰 위치 채우기")) stageDesigner.FillSpawnPoint();
+        if (GUILayout.Button("Fill Spawn Point")) stageDesigner.FillSpawnPoint();
         EditorGUILayout.PropertyField(spawnDatas[stageDesigner.difficulty], new GUIContent("SpawnDatas"), true);
 
         serializedObject.ApplyModifiedProperties();

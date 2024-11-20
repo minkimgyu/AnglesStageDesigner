@@ -42,7 +42,7 @@ public class SurvivalStageEditor : BaseStageEditor
         EditorGUILayout.Space();
 
         EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("앞으로"))
+        if (GUILayout.Button("Foward"))
         {
             if (stageDesigner.index > 0)
             {
@@ -50,7 +50,7 @@ public class SurvivalStageEditor : BaseStageEditor
                 stageDesigner.CreatePreview();
             }
         }
-        if (GUILayout.Button("뒤로"))
+        if (GUILayout.Button("Backward"))
         {
             if (stageDesigner.index < stageDesigner.MaxPhaseIndex)
             {
@@ -63,11 +63,11 @@ public class SurvivalStageEditor : BaseStageEditor
         var spawnPointProperty = spawnPointParents.GetArrayElementAtIndex(stageDesigner.index);
         EditorGUILayout.PropertyField(spawnPointProperty, new GUIContent("SpawnPointParent"));
 
-        if (GUILayout.Button("스폰 위치 채우기")) stageDesigner.FillSpawnPoint();
+        if (GUILayout.Button("Fill Spawn Point")) stageDesigner.FillSpawnPoint();
 
         var phaseProperty = phaseDatas.GetArrayElementAtIndex(stageDesigner.index);
 
-        EditorGUILayout.PropertyField(phaseProperty, new GUIContent("PhaseData"), true);
+        EditorGUILayout.PropertyField(phaseProperty, new GUIContent("Phase Data"), true);
         serializedObject.ApplyModifiedProperties();
     }
 }
