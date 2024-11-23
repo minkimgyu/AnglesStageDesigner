@@ -32,10 +32,20 @@ abstract public class BaseStageDesigner : MonoBehaviour
         if (childTransform != null)// 존재한다면 아래 진행하지 않음
         {
             previewSpawner = childTransform.GetComponent<PreviewSpawner>();
-            return;
-        }
 
-        CreatePreviewSpawner(previewerPrefab);
+            // 다른 씬을 갔다오면 초기화가 되어있지 않은 경우가 있음
+            // 이를 추가로 해결해줘야한다.
+            if (previewSpawner.NowInitialized == false)
+            {
+                DestroyImmediate(previewSpawner.gameObject);
+                CreatePreviewSpawner(previewerPrefab);
+                _OnValidate(); // 기존 데이터를 바탕으로 초기화 해준다.
+            }
+        }
+        else
+        {
+            CreatePreviewSpawner(previewerPrefab);
+        }
     }
 
     async void OnChanged()

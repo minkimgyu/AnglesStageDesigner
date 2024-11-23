@@ -11,8 +11,14 @@ public class Pool : MonoBehaviour
     protected Transform activatedPreviewerParent;
     protected Transform deactivatedPreviewerParent;
 
+    bool _nowInitialized = false;
+    public bool NowInitialized { get { return _nowInitialized; } }
+
     public void Initialize(IPoolable poolObject, int startCount, Transform activatedPreviewerParent, Transform deactivatedPreviewerParent)
     {
+        // 초기화 적용
+        if(_nowInitialized == false) _nowInitialized = true;
+
         this.activatedPreviewerParent = activatedPreviewerParent;
         this.deactivatedPreviewerParent = deactivatedPreviewerParent;
 

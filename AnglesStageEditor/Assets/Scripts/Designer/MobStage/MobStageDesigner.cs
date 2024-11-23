@@ -8,6 +8,16 @@ using System;
 
 public class MobStageDesigner : BaseStageDesigner
 {
+    /// <summary>
+    /// ctrl + alt + m
+    /// </summary>
+    [MenuItem("StageEditor/MobStageDesigner %&m")]
+    public static void OpenMobStageDesigner()
+    {
+        GameObject mobStageDesigner = new GameObject("MobStageDesigner");
+        mobStageDesigner.AddComponent<MobStageDesigner>();
+    }
+
     public SpawnData[] easySpawnDatas;
     public SpawnData[] normalSpawnDatas;
     public SpawnData[] hardSpawnDatas;

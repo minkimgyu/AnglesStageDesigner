@@ -1,10 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
 public class BossStageDesigner : BaseStageDesigner
 {
+    /// <summary>
+    /// ctrl + alt + b
+    /// </summary>
+    [MenuItem("StageEditor/BossStageDesigner %&b")]
+    public static void OpenBossStageDesigner()
+    {
+        GameObject mobStageDesigner = new GameObject("BossStageDesigner");
+        mobStageDesigner.AddComponent<BossStageDesigner>();
+    }
+
     public SpawnData bossSpawnData;
     public SpawnData[] mobSpawnDatas;
 

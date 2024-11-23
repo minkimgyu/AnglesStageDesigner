@@ -1,10 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class SurvivalStageDesigner : BaseStageDesigner
 {
-    const int maxPhaseSize = 50;
+    /// <summary>
+    /// ctrl + alt + s
+    /// </summary>
+    [MenuItem("StageEditor/SurvivalStageDesigner %&s")]
+    public static void OpenSurvivalStageDesigner()
+    {
+        GameObject mobStageDesigner = new GameObject("SurvivalStageDesigner");
+        mobStageDesigner.AddComponent<SurvivalStageDesigner>();
+    }
+
+    const int maxPhaseSize = 100;
     public int MaxPhaseIndex { get { return maxPhaseSize - 1; } }
 
     public int index; // phase ¿Œµ¶Ω∫
@@ -47,6 +58,8 @@ public class SurvivalStageDesigner : BaseStageDesigner
     public void CreatePreview()
     {
         PhaseData phaseData = phaseDatas[index];
+        if (phaseData == null) return;
+
         SpawnData[] spawnDatas = phaseData.spawnDatas;
         if (spawnDatas == null) return;
 
