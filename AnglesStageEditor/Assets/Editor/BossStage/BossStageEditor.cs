@@ -41,17 +41,17 @@ public class BossStageEditor : BaseStageEditor
     {
         DrawBasicInspector(stageDesigner);
 
-        EditorGUILayout.PropertyField(bossSpawnPointParent, new GUIContent("BossSpawnPointParent"));
+        EditorGUILayout.PropertyField(bossSpawnPointParent, new GUIContent("Boss SpawnPoint Parent"));
         serializedObject.ApplyModifiedProperties();
 
-        EditorGUILayout.PropertyField(mobSpawnPointParent, new GUIContent("MobSpawnPointParent"));
+        EditorGUILayout.PropertyField(mobSpawnPointParent, new GUIContent("Mob SpawnPoint Parent"));
         serializedObject.ApplyModifiedProperties();
 
         if (GUILayout.Button("Fill Spawn Point")) 
             stageDesigner.FillSpawnPoint();
 
-        EditorGUILayout.PropertyField(bossSpawnData, new GUIContent("BossSpawnData"));
-        EditorGUILayout.PropertyField(mobSpawnDatas, new GUIContent("BossSpawnData"), true);
+        EditorGUILayout.PropertyField(bossSpawnData, new GUIContent("Boss Spawn Data"));
+        EditorGUILayout.PropertyField(mobSpawnDatas, new GUIContent("Boss Spawn Data"), true);
         serializedObject.ApplyModifiedProperties();
     }
 }

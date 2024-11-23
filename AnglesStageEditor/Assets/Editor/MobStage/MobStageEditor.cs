@@ -60,10 +60,10 @@ public class MobStageEditor : BaseStageEditor
             stageDesigner.CreatePreview();
         }
 
-        EditorGUILayout.PropertyField(spawnPointParent, new GUIContent("SpawnPointParent"));
+        EditorGUILayout.PropertyField(spawnPointParent, new GUIContent("Spawn Point Parent"));
 
         if (GUILayout.Button("Fill Spawn Point")) stageDesigner.FillSpawnPoint();
-        EditorGUILayout.PropertyField(spawnDatas[stageDesigner.difficulty], new GUIContent("SpawnDatas"), true);
+        EditorGUILayout.PropertyField(spawnDatas[stageDesigner.difficulty], new GUIContent("Spawn Datas"), true);
 
         serializedObject.ApplyModifiedProperties();
 

@@ -25,9 +25,11 @@ public class FileIO
     {
         _parser = parser;
         _extension = extension;
+        // Application.dataPath + filePath + fileName + _extension
     }
 
-    string ReturnPath(string filePath, string fileName) { return Application.dataPath + filePath + fileName + _extension; }
+    string ReturnPath(string filePath, string fileName) 
+    { return $"{Application.dataPath}/{filePath}/{fileName}{_extension}"; }
 
     public T LoadData<T>(string jData)
     {

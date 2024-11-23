@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System.Threading.Tasks;
+using System.IO;
 
 abstract public class BaseStageDesigner : MonoBehaviour
 {
@@ -17,8 +18,37 @@ abstract public class BaseStageDesigner : MonoBehaviour
     protected string fileName = "StageData";
     public string FileName { get { return fileName; } set { fileName = value; } }
 
-    protected string fileLocation = "/Editor/Save/";
+    protected string fileLocation = "Editor/Save";
     public string FileLocation { get { return fileLocation; } set { fileLocation = value; } }
+
+    protected string exportPackageName = "LevelPackage";
+    public string ExportPackageName { get { return exportPackageName; } set { exportPackageName = value; } }
+
+    protected string exportPackageLocation = "Editor/Save";
+    public string ExportPackageLocation { get { return exportPackageLocation; } set { exportPackageLocation = value; } }
+
+    [MenuItem("StageEditor/Build Release[For Developer Only!! Not Designer!!]", false, 1)]
+    public static void BuildRelease()
+    {
+        List<string> paths = new List<string>();
+
+        paths.Add("Assets/Editor");
+        paths.Add("Assets/Resources");
+        paths.Add("Assets/Scripts");
+
+        AssetDatabase.ExportPackage(paths.ToArray(), "AnglesStageDesigner_n_n_n.unitypackage",
+                    ExportPackageOptions.Recurse |
+                    ExportPackageOptions.IncludeDependencies |
+                    ExportPackageOptions.Interactive);
+    }
+
+    public void ExportData()
+    {
+        AssetDatabase.ExportPackage($"Assets/{exportPackageLocation}", $"{exportPackageName}.unitypackage",
+                    ExportPackageOptions.Recurse | 
+                    ExportPackageOptions.IncludeDependencies | 
+                    ExportPackageOptions.Interactive);
+    }
 
     public void Initialize(
         Dictionary<Name, Sprite> enemyImageDictionary,

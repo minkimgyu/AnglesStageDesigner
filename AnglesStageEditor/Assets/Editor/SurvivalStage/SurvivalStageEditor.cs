@@ -24,7 +24,7 @@ public class SurvivalStageEditor : BaseStageEditor
 
     private void OnSceneGUI()
     {
-        SpawnData[] spawnDatas = stageDesigner.phaseDatas[stageDesigner.index].spawnDatas;
+        SpawnData[] spawnDatas = stageDesigner.phaseDatas[stageDesigner.Index].spawnDatas;
         if (spawnDatas == null) return;
 
         for (int i = 0; i < spawnDatas.Length; i++)
@@ -38,34 +38,34 @@ public class SurvivalStageEditor : BaseStageEditor
         DrawBasicInspector(stageDesigner);
 
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField($"Phase {stageDesigner.index}", labelStyle, GUILayout.ExpandWidth(true));
+        EditorGUILayout.LabelField($"Phase {stageDesigner.PhaseCount}", labelStyle, GUILayout.ExpandWidth(true));
         EditorGUILayout.Space();
 
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Foward"))
         {
-            if (stageDesigner.index > 0)
+            if (stageDesigner.Index > 0)
             {
-                stageDesigner.index--;
+                stageDesigner.Index--;
                 stageDesigner.CreatePreview();
             }
         }
         if (GUILayout.Button("Backward"))
         {
-            if (stageDesigner.index < stageDesigner.MaxPhaseIndex)
+            if (stageDesigner.Index < stageDesigner.MaxPhaseIndex)
             {
-                stageDesigner.index++;
+                stageDesigner.Index++;
                 stageDesigner.CreatePreview();
             }
         }
         EditorGUILayout.EndHorizontal();
 
-        var spawnPointProperty = spawnPointParents.GetArrayElementAtIndex(stageDesigner.index);
-        EditorGUILayout.PropertyField(spawnPointProperty, new GUIContent("SpawnPointParent"));
+        var spawnPointProperty = spawnPointParents.GetArrayElementAtIndex(stageDesigner.Index);
+        EditorGUILayout.PropertyField(spawnPointProperty, new GUIContent("Spawn Point Parent"));
 
         if (GUILayout.Button("Fill Spawn Point")) stageDesigner.FillSpawnPoint();
 
-        var phaseProperty = phaseDatas.GetArrayElementAtIndex(stageDesigner.index);
+        var phaseProperty = phaseDatas.GetArrayElementAtIndex(stageDesigner.Index);
 
         EditorGUILayout.PropertyField(phaseProperty, new GUIContent("Phase Data"), true);
         serializedObject.ApplyModifiedProperties();

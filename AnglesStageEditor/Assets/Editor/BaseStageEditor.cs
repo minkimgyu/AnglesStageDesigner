@@ -73,6 +73,16 @@ public class BaseStageEditor : Editor
         serializedObject.Update();
 
         EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Export", labelStyle, GUILayout.ExpandWidth(true));
+        EditorGUILayout.Space();
+
+        baseDesigner.ExportPackageName = EditorGUILayout.TextField("Package Name", baseDesigner.ExportPackageName);
+        baseDesigner.FileLocation = EditorGUILayout.TextField("Location To Export", baseDesigner.ExportPackageLocation);
+
+        if (GUILayout.Button("Build Package")) baseDesigner.ExportData();
+
+
+        EditorGUILayout.Space();
         EditorGUILayout.LabelField("Setting", labelStyle, GUILayout.ExpandWidth(true));
         EditorGUILayout.Space();
         baseDesigner.FileName = EditorGUILayout.TextField("File Name", baseDesigner.FileName);

@@ -18,7 +18,11 @@ public class SurvivalStageDesigner : BaseStageDesigner
     const int maxPhaseSize = 100;
     public int MaxPhaseIndex { get { return maxPhaseSize - 1; } }
 
-    public int index; // phase ¿Œµ¶Ω∫
+    int index; // phase ¿Œµ¶Ω∫
+    public int Index { get { return index; } set { index = value; } } // phase ¿Œµ¶Ω∫
+
+    public int PhaseCount {  get { return index + 1; } }
+
     public PhaseData[] phaseDatas = new PhaseData[maxPhaseSize];
     public Transform[] spawnPointParents = new Transform[maxPhaseSize];
 
