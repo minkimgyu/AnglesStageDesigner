@@ -9,9 +9,9 @@ using System;
 public class MobStageDesigner : BaseStageDesigner
 {
     /// <summary>
-    /// ctrl + alt + m
+    /// ctrl + alt + shift + m
     /// </summary>
-    [MenuItem("StageEditor/MobStageDesigner %&m")]
+    [MenuItem("StageEditor/MobStageDesigner %&#m")]
     public static void OpenMobStageDesigner()
     {
         GameObject mobStageDesigner = new GameObject("MobStageDesigner");
@@ -54,7 +54,7 @@ public class MobStageDesigner : BaseStageDesigner
         return spawnDatas;
     }
 
-    public void SetSpawnData(SpawnData[] spawnDatas)
+    public void SetSpawnData(SpawnData[] spawnDatas, Difficulty difficulty)
     {
         switch (difficulty)
         {
@@ -97,12 +97,14 @@ public class MobStageDesigner : BaseStageDesigner
             spawnDatas[j] = new SpawnData(point.position, (Name)1);
         }
 
-        SetSpawnData(spawnDatas);
+        SetSpawnData(spawnDatas, difficulty);
     }
 
     public void FillSpawnPoint()
     {
-        FillPoint(spawnPointParent, difficulty);
+        FillPoint(spawnPointParent, Difficulty.Easy);
+        FillPoint(spawnPointParent, Difficulty.Nomal);
+        FillPoint(spawnPointParent, Difficulty.Hard);
         CreatePreview();
     }
 

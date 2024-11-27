@@ -6,9 +6,9 @@ using UnityEngine;
 public class SurvivalStageDesigner : BaseStageDesigner
 {
     /// <summary>
-    /// ctrl + alt + s
+    /// ctrl + alt + shift + s
     /// </summary>
-    [MenuItem("StageEditor/SurvivalStageDesigner %&s")]
+    [MenuItem("StageEditor/SurvivalStageDesigner %&#s")]
     public static void OpenSurvivalStageDesigner()
     {
         GameObject mobStageDesigner = new GameObject("SurvivalStageDesigner");

@@ -7,9 +7,9 @@ using UnityEngine;
 public class BossStageDesigner : BaseStageDesigner
 {
     /// <summary>
-    /// ctrl + alt + b
+    /// ctrl + alt + shift + b
     /// </summary>
-    [MenuItem("StageEditor/BossStageDesigner %&b")]
+    [MenuItem("StageEditor/BossStageDesigner %&#b")]
     public static void OpenBossStageDesigner()
     {
         GameObject mobStageDesigner = new GameObject("BossStageDesigner");

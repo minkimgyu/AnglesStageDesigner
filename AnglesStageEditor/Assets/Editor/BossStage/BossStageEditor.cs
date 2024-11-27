@@ -41,10 +41,10 @@ public class BossStageEditor : BaseStageEditor
     {
         DrawBasicInspector(stageDesigner);
 
-        EditorGUILayout.PropertyField(bossSpawnPointParent, new GUIContent("Boss SpawnPoint Parent"));
+        EditorGUILayout.PropertyField(bossSpawnPointParent, new GUIContent("Boss Spawn Point"));
         serializedObject.ApplyModifiedProperties();
 
-        EditorGUILayout.PropertyField(mobSpawnPointParent, new GUIContent("Mob SpawnPoint Parent"));
+        EditorGUILayout.PropertyField(mobSpawnPointParent, new GUIContent("Mob Spawn Point Parent"));
         serializedObject.ApplyModifiedProperties();
 
         if (GUILayout.Button("Fill Spawn Point")) 
