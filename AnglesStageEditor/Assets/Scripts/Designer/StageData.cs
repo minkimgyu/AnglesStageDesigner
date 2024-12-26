@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
 
 [Serializable]
 public enum Difficulty
@@ -37,7 +39,7 @@ public enum Name
 public struct SpawnData
 {
     [SerializeField] public SerializableVector2 spawnPosition; // 실질적 위치 제공
-    [SerializeField] public Name name;
+    [SerializeField] [JsonConverter(typeof(StringEnumConverter))] public Name name;
 
     public SpawnData(Vector3 point, Name name)
     {

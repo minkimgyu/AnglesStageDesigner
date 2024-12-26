@@ -29,14 +29,34 @@ public class SurvivalStageDesigner : BaseStageDesigner
     public override void LoadData()
     {
         SurvivalStageData mobStageData = fileIO.LoadData<SurvivalStageData>(fileToLoad.text);
-        phaseDatas = mobStageData.phaseDatas;
+        for (int i = 0; i < mobStageData.phaseDatas.Length; i++)
+        {
+            phaseDatas[i] = mobStageData.phaseDatas[i];
+        }
+
         CreatePreview();
     }
 
     public override void SaveData()
     {
+        int lastIndex = 0;
+        for (int i = 0; i < phaseDatas.Length; i++)
+        {
+            if (phaseDatas[i].spawnDatas.Length == 0)
+            {
+                lastIndex = i;
+                break;
+            }
+        }
+
+        PhaseData[] savcePhaseDatas = new PhaseData[lastIndex];
+        for (int i = 0; i < lastIndex; i++)
+        {
+            savcePhaseDatas[i] = phaseDatas[i];
+        }
+
         fileIO.SaveData(
-            new SurvivalStageData(phaseDatas),
+            new SurvivalStageData(savcePhaseDatas),
             fileLocation,
             fileName
         );
