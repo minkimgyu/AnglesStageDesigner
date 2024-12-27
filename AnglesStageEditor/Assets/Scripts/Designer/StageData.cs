@@ -28,9 +28,15 @@ public enum Name
     RedPentagon,
     RedHexagon,
 
+    OperaTriangle,
+    OperaRectangle,
+    OperaPentagon,
+    OperaHexagon,
+
     Tricon,
     Rhombus,
     Pentagonic,
+    Hexahorn,
 
     Bomb
 }

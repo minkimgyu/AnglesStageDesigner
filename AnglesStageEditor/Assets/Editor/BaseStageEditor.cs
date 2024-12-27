@@ -22,9 +22,10 @@ public class BaseStageEditor : Editor
         {
             { Name.Player_Not_Used, Resources.Load<Sprite>("Images/Player_Not_Used") },
 
-            { Name.Tricon, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Boss_Tricorn") },
-            { Name.Rhombus, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Boss_Rhombus") },
-            { Name.Pentagonic, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Boss_Pentagonic") },
+            { Name.Tricon, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Chapter1_BossTricorn") },
+            { Name.Rhombus, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Chapter2_BossRhombus") },
+            { Name.Pentagonic, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Chapter3_BossPentagonic") },
+            { Name.Hexahorn, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Chapter4_BossHexahorn") },
 
             { Name.YellowTriangle, Resources.Load<Sprite>("Images/Enemy/Yellow/AnglesEnemyTriYellow") },
             { Name.YellowRectangle, Resources.Load<Sprite>("Images/Enemy/Yellow/AnglesEnemyRectYellow") },
@@ -36,28 +37,41 @@ public class BaseStageEditor : Editor
             { Name.RedPentagon, Resources.Load<Sprite>("Images/Enemy/Red/AnglesEnemyPentaRed") },
             { Name.RedHexagon, Resources.Load<Sprite>("Images/Enemy/Red/AgnlesEnemyHectaRed") },
 
+            { Name.OperaTriangle, Resources.Load<Sprite>("Images/Enemy/Opera/AnglesEnemyTriOpera") },
+            { Name.OperaRectangle, Resources.Load<Sprite>("Images/Enemy/Opera/AnglesEnemyRectOpera") },
+            { Name.OperaPentagon, Resources.Load<Sprite>("Images/Enemy/Opera/AnglesEnemyPentaOpera") },
+            { Name.OperaHexagon, Resources.Load<Sprite>("Images/Enemy/Opera/AgnlesEnemyHectaOpera") },
+
             { Name.Bomb, Resources.Load<Sprite>("Images/AnglesBomb") },
         };
+
+        const float size = 0.6f;
 
         Dictionary<Name, float> enemyScaleDictionary = new Dictionary<Name, float>()
         {
             { Name.Player_Not_Used, 1f },
 
-            { Name.YellowTriangle, 0.4f },
-            { Name.YellowRectangle, 0.4f },
-            { Name.YellowPentagon, 0.5f },
-            { Name.YellowHexagon, 0.5f },
+            { Name.YellowTriangle, size },
+            { Name.YellowRectangle, size },
+            { Name.YellowPentagon, size },
+            { Name.YellowHexagon, size },
 
-            { Name.RedTriangle, 0.4f },
-            { Name.RedRectangle, 0.4f },
-            { Name.RedPentagon, 0.45f },
-            { Name.RedHexagon, 0.45f },
+            { Name.RedTriangle, size },
+            { Name.RedRectangle, size },
+            { Name.RedPentagon, size },
+            { Name.RedHexagon, size },
 
-            { Name.Tricon, 0.6f },
-            { Name.Rhombus, 0.6f },
-            { Name.Pentagonic, 0.75f },
+            { Name.OperaTriangle, size },
+            { Name.OperaRectangle, size },
+            { Name.OperaPentagon, size },
+            { Name.OperaHexagon, size },
 
-            { Name.Bomb, 0.7f },
+            { Name.Tricon, size },
+            { Name.Rhombus, size },
+            { Name.Pentagonic, size },
+            { Name.Hexahorn, size },
+
+            { Name.Bomb, size },
 
         };
 
