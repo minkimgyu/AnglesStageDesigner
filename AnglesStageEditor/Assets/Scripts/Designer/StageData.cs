@@ -37,6 +37,7 @@ public enum Name
     Rhombus,
     Pentagonic,
     Hexahorn,
+    Octavia,
 
     Bomb
 }

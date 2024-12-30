@@ -26,6 +26,7 @@ public class BaseStageEditor : Editor
             { Name.Rhombus, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Chapter2_BossRhombus") },
             { Name.Pentagonic, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Chapter3_BossPentagonic") },
             { Name.Hexahorn, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Chapter4_BossHexahorn") },
+            { Name.Octavia, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Chapter5_BossOctavia") },
 
             { Name.YellowTriangle, Resources.Load<Sprite>("Images/Enemy/Yellow/AnglesEnemyTriYellow") },
             { Name.YellowRectangle, Resources.Load<Sprite>("Images/Enemy/Yellow/AnglesEnemyRectYellow") },
@@ -45,7 +46,7 @@ public class BaseStageEditor : Editor
             { Name.Bomb, Resources.Load<Sprite>("Images/AnglesBomb") },
         };
 
-        const float size = 0.6f;
+        const float size = 0.5f;
 
         Dictionary<Name, float> enemyScaleDictionary = new Dictionary<Name, float>()
         {
@@ -70,6 +71,7 @@ public class BaseStageEditor : Editor
             { Name.Rhombus, size },
             { Name.Pentagonic, size },
             { Name.Hexahorn, size },
+            { Name.Octavia, size },
 
             { Name.Bomb, size },
 
@@ -91,7 +93,7 @@ public class BaseStageEditor : Editor
         EditorGUILayout.Space();
 
         baseDesigner.ExportPackageName = EditorGUILayout.TextField("Package Name", baseDesigner.ExportPackageName);
-        baseDesigner.FileLocation = EditorGUILayout.TextField("Location To Export", baseDesigner.ExportPackageLocation);
+        baseDesigner.ExportPackageLocation = EditorGUILayout.TextField("Location To Export", baseDesigner.ExportPackageLocation);
 
         if (GUILayout.Button("Build Package")) baseDesigner.ExportData();
 
