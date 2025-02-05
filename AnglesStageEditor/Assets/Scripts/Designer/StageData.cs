@@ -39,7 +39,14 @@ public enum Name
     Hexahorn,
     Octavia,
 
-    Bomb
+    Bomb,
+
+    GreenTriangle,
+    GreenRectangle,
+    GreenPentagon,
+    GreenHexagon,
+
+    Hexatric
 }
 
 [Serializable]

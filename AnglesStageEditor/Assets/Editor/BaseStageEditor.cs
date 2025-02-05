@@ -41,9 +41,16 @@ public class BaseStageEditor : Editor
             { Name.OperaTriangle, Resources.Load<Sprite>("Images/Enemy/Opera/AnglesEnemyTriOpera") },
             { Name.OperaRectangle, Resources.Load<Sprite>("Images/Enemy/Opera/AnglesEnemyRectOpera") },
             { Name.OperaPentagon, Resources.Load<Sprite>("Images/Enemy/Opera/AnglesEnemyPentaOpera") },
-            { Name.OperaHexagon, Resources.Load<Sprite>("Images/Enemy/Opera/AgnlesEnemyHectaOpera") },
+            { Name.OperaHexagon, Resources.Load<Sprite>("Images/Enemy/Opera/AnglesEnemyHectaOpera") },
 
             { Name.Bomb, Resources.Load<Sprite>("Images/AnglesBomb") },
+
+            { Name.GreenTriangle, Resources.Load<Sprite>("Images/Enemy/Green/AnglesGreenTri") },
+            { Name.GreenRectangle, Resources.Load<Sprite>("Images/Enemy/Green/AnglesGreenRect") },
+            { Name.GreenPentagon, Resources.Load<Sprite>("Images/Enemy/Green/AnglesGreenPenta") },
+            { Name.GreenHexagon, Resources.Load<Sprite>("Images/Enemy/Green/AgnlesGreenHexa") },
+
+            { Name.Hexatric, Resources.Load<Sprite>("Images/Enemy/Boss/Angles_Chapter6_BossHexatric") },
         };
 
         const float size = 0.5f;
@@ -75,6 +82,12 @@ public class BaseStageEditor : Editor
 
             { Name.Bomb, size },
 
+            { Name.GreenTriangle, size },
+            { Name.GreenRectangle, size },
+            { Name.GreenPentagon, size },
+            { Name.GreenHexagon, size },
+
+            { Name.Hexatric, size }
         };
 
         Previewer previewerPrefab = Resources.Load<Previewer>("Prefabs/Previewer");
